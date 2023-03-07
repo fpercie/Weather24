@@ -1,27 +1,31 @@
 $background: #2f80cc;
 
-* {
-  font-family: Arial, Helvetica, sans-serif;
-}
-
 .parent {
   display: flex;
   justify-content: center;
   align-items: center;
+  font-family: Arial, Helvetica, sans-serif;
+
+  .child {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 130px;
+    width: 600px;
+    background-color: $background;
+    border-radius: 30px;
+    padding: 20px;
+
+    .title {
+      font-size: 80px;
+      color: #ffffff;
+      background-color: $background;
+    }
+  }
 }
 
-.title {
-  font-size: 80px;
-  color: #ffffff;
-  background-color: $background;
-}
-
-.child {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  height: 130px;
-  width: 600px;
-  background-color: $background;
-  border-radius: 30px;
+@media (max-width: 600px) {
+  .parent {
+    transform: scale(70%);
+  }
 }
