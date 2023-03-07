@@ -23,6 +23,7 @@
     "@types/react-dom": "^18.0.11",
     "autoprefixer": "^10.4.13",
     "css-loader": "^6.7.3",
+    "cssnano": "^5.1.15",
     "html-webpack-plugin": "^5.5.0",
     "node-sass": "^8.0.0",
     "postcss": "^8.4.21",
