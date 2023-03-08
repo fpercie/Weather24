@@ -1,10 +1,10 @@
-$background: #2f80cc;
+$background: #1464af;
 
 .parent {
   display: flex;
   justify-content: center;
   align-items: center;
-  font-family: Arial, Helvetica, sans-serif;
+  padding: 30px;
 
   .child {
     display: flex;
@@ -14,12 +14,20 @@ $background: #2f80cc;
     width: 600px;
     background-color: $background;
     border-radius: 30px;
-    padding: 20px;
+    padding: 15px 40px;
+    border: solid 3px #021d36;
+    gap: 30px;
 
     .title {
       font-size: 80px;
       color: #ffffff;
       background-color: $background;
+    }
+
+    .fa-arrow-trend-up {
+      background-color: $background;
+      font-size: 60px;
+      color: #021d36;
     }
   }
 }
