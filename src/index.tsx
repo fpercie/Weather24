@@ -1,8 +1,9 @@
 import React from "react";
 import ReactDOM from "react-dom";
+import "./styles/Generalstyles.scss";
 
 import Title from "./components/Title";
 ReactDOM.render(<Title />, document.getElementById("title"));
 
-import Generalstyles from "./components/Generalstyles";
-ReactDOM.render(<Generalstyles />, document.getElementById("generalstyles"));
+import Search from "./components/Search";
+ReactDOM.render(<Search />, document.getElementById("search"));

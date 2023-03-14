@@ -1,4 +1,13 @@
 * {
-  background-color: #447891;
+  background-color: #041535;
   font-family: Arial, Helvetica, sans-serif;
+}
+
+.generalstyles {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  gap: 60px;
+  padding: 60px;
 }
