@@ -1,7 +1,7 @@
 .input {
   background-color: #ffff;
   border: none;
-  height: 50px;
+  height: 70px;
   width: 400px;
   border-radius: 30px;
   font-size: 30px;
@@ -16,8 +16,8 @@
   align-items: center;
   justify-content: center;
   flex-direction: row;
-  width: 500px;
-  height: 70px;
+  width: 550px;
+  height: 80px;
   background-color: #447891;
   border-radius: 40px;
   border: solid 3px #b6cadf;
@@ -26,14 +26,14 @@
 .searchbutton {
   border: none;
   background-color: #ffffff;
-  border-radius: 25px;
-  height: 50px;
-  width: 50px;
+  border-radius: 50px;
+  height: 100px;
+  width: 100px;
   border: 2px solid #000000;
 }
 
 .fa-magnifying-glass {
   color: #000000;
   background-color: #ffff;
-  font-size: 20px;
+  font-size: 30px;
 }
