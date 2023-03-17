@@ -1,13 +1,12 @@
 .input {
   background-color: #ffff;
   border: none;
-  height: 70px;
+  height: 80px;
   width: 400px;
   border-radius: 30px;
   font-size: 30px;
   font-weight: 600;
   text-align: center;
-  border: 2px solid #000000;
 }
 
 .parent {
@@ -16,9 +15,9 @@
   align-items: center;
   justify-content: center;
   flex-direction: row;
-  width: 550px;
-  height: 80px;
-  background-color: #447891;
+  width: 600px;
+  height: 180px;
+  background-color: #000000;
   border-radius: 40px;
   border: solid 3px #b6cadf;
 }
@@ -26,10 +25,9 @@
 .searchbutton {
   border: none;
   background-color: #ffffff;
-  border-radius: 50px;
-  height: 100px;
-  width: 100px;
-  border: 2px solid #000000;
+  border-radius: 40px;
+  height: 80px;
+  width: 80px;
 }
 
 .fa-magnifying-glass {

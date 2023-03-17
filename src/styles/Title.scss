@@ -1,6 +1,6 @@
-$background: #1464af;
+$background: #000000;
 
-.parent {
+.parenttitle {
   display: flex;
   justify-content: center;
   align-items: center;
@@ -15,19 +15,19 @@ $background: #1464af;
     background-color: $background;
     border-radius: 30px;
     padding: 15px 40px;
-    border: solid 3px #021d36;
+    border: solid 3px #ffffff;
     gap: 30px;
 
     .title {
       font-size: 80px;
-      color: #ffffff;
+      color: #f80909;
       background-color: $background;
     }
 
     .fa-arrow-trend-up {
       background-color: $background;
       font-size: 60px;
-      color: #021d36;
+      color: #28c528;
     }
   }
 }

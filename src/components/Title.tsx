@@ -5,7 +5,7 @@ const title = "Stockcheck24";
 
 function Title(props: any) {
   return (
-    <div className="parent">
+    <div className="parenttitle">
       <div className="child">
         <h1 className="title">{title}</h1>
         <div className="icon">
