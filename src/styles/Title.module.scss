@@ -21,3 +21,9 @@
     background-color: transparent;
   }
 }
+
+@media (max-width: 400px) {
+  .parent {
+    font-size: 35px;
+  }
+}
