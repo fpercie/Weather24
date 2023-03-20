@@ -8,5 +8,5 @@ ReactDOM.render(<Title />, document.getElementById("title"));
 import Search from "./components/Search";
 ReactDOM.render(<Search />, document.getElementById("search"));
 
-import Popularstocks from "./components/Popularstocks";
-ReactDOM.render(<Popularstocks />, document.getElementById("popularstocks"));
+import Popularstocks from "./components/Popularcities";
+ReactDOM.render(<Popularstocks />, document.getElementById("popularcities"));

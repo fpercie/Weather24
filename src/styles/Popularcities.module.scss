@@ -12,6 +12,15 @@
     border: solid 2px #787878;
     border-radius: 30px;
     transition: 0.6s;
+    display: flex;
+    align-items: top;
+    justify-content: center;
+  }
+
+  .popularcitytitle {
+    background-color: transparent;
+    color: #ffffff;
+    font-size: 25px;
   }
 }
 
