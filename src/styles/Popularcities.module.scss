@@ -13,14 +13,38 @@
     border-radius: 30px;
     transition: 0.6s;
     display: flex;
-    align-items: top;
-    justify-content: center;
+    align-items: center;
+    flex-direction: column;
   }
 
   .popularcitytitle {
     background-color: transparent;
     color: #ffffff;
     font-size: 25px;
+  }
+
+  .currenttempparent {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    width: 260px;
+    height: 100px;
+    background-color: transparent;
+    padding: 30px;
+    gap: 10px;
+
+    .currenttemp {
+      background-color: transparent;
+      font-weight: 600;
+      color: #ffffff;
+      font-size: 5em;
+    }
+
+    .currenttempicon {
+      background-color: transparent;
+      height: 100px;
+    }
   }
 }
 
