@@ -12,20 +12,40 @@
     #32c5c5,
     #2f5cd8
   );
-
   position: absolute;
   top: 0;
   left: 0;
-  display: none;
-}
 
-.child {
-  width: 90vw;
-  height: 90vh;
-  background-color: #0b39d3;
-  position: absolute;
-  top: 50px;
-  z-index: 9999;
-  border-radius: 30px;
-  border: solid 3px #9b9b9b;
+  .child {
+    width: 90vw;
+    height: 90vh;
+    background-color: #0b39d3;
+    z-index: 9999;
+    border-radius: 30px;
+    border: solid 3px #9b9b9b;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+    .closediv {
+      background-color: transparent;
+      height: 50px;
+      width: 88vw;
+      display: flex;
+      justify-content: right;
+      align-items: center;
+
+      .closeButton {
+        background: none;
+        border: none;
+        cursor: pointer;
+
+        .icon {
+          color: #ffffff;
+          font-size: 24px;
+          background-color: transparent;
+        }
+      }
+    }
+  }
 }

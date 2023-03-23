@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import styles from "/src/styles/Popularcities.module.scss";
+import Details from "./Details";
 
 const API_KEY = "f0a413b45f3448d7b70192646221012";
 
@@ -11,7 +12,7 @@ async function getWeather(city: string) {
   return data;
 }
 
-function Popularweather() {
+function Popularweather(props: any) {
   const [NewYorkTitle, setNewYorkTitle] = useState("");
   const [NewYorkCountry, setNewYorkCountry] = useState("");
   const [NewYorkTemp, setNewYorkTemp] = useState("");
@@ -72,9 +73,11 @@ function Popularweather() {
     fetchTitles();
   }, []);
 
+  const [showPopup, setShowPopup] = useState(false);
+
   return (
     <div className={styles.parent}>
-      <button className={styles.btn}>
+      <button className={styles.btn} onClick={() => setShowPopup(true)}>
         <h1 className={styles.popularcitytitle}>
           {MadridTitle}, {MadridCountry}
         </h1>
@@ -85,7 +88,7 @@ function Popularweather() {
           <img className={styles.currenttempicon} src={MadridIcon} />
         </div>
       </button>
-      <button className={styles.btn}>
+      <button className={styles.btn} onClick={() => setShowPopup(true)}>
         <h1 className={styles.popularcitytitle}>
           {MunichTitle}, {MunichCountry}
         </h1>
@@ -96,7 +99,7 @@ function Popularweather() {
           <img className={styles.currenttempicon} src={MunichIcon} />
         </div>
       </button>
-      <button className={styles.btn}>
+      <button className={styles.btn} onClick={() => setShowPopup(true)}>
         <h1 className={styles.popularcitytitle}>
           {TokyoTitle}, {TokyoCountry}
         </h1>
@@ -107,7 +110,7 @@ function Popularweather() {
           <img className={styles.currenttempicon} src={TokyoIcon} />
         </div>
       </button>
-      <button className={styles.btn}>
+      <button className={styles.btn} onClick={() => setShowPopup(true)}>
         <h1 className={styles.popularcitytitle}>
           {LondonTitle}, {LondonCountry}
         </h1>
@@ -118,7 +121,7 @@ function Popularweather() {
           <img className={styles.currenttempicon} src={LondonIcon} />
         </div>
       </button>
-      <button className={styles.btn}>
+      <button className={styles.btn} onClick={() => setShowPopup(true)}>
         <h1 className={styles.popularcitytitle}>
           {NewYorkTitle}, {NewYorkCountry}
         </h1>
@@ -129,6 +132,7 @@ function Popularweather() {
           <img className={styles.currenttempicon} src={NewYorkIcon} />
         </div>
       </button>
+      <Details trigger={showPopup} setTrigger={setShowPopup} />
     </div>
   );
 }
