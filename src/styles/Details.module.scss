@@ -1,0 +1,12 @@
+.parent {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.child {
+  width: 90vw;
+  height: 90vh;
+  background-color: #0b39d3;
+  z-index: 1;
+}
