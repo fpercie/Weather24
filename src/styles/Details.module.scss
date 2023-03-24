@@ -51,5 +51,19 @@
         }
       }
     }
+    .titleparent {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      height: 100px;
+      width: 90vw;
+      background-color: transparent;
+
+      .title {
+        color: #ffffff;
+        text-align: center;
+        background-color: transparent;
+      }
+    }
   }
 }

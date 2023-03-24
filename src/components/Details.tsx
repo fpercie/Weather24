@@ -42,7 +42,9 @@ function Details(props: any) {
             <FontAwesomeIcon icon={faTimes} className={styles.icon} />
           </button>
         </div>
-        <h1>{Title}</h1>
+        <div className={styles.titleparent}>
+          <h1 className={styles.title}>{Title}</h1>
+        </div>
       </div>
     </div>
   ) : null;
