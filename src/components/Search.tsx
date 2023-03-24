@@ -7,8 +7,15 @@ import Details from "./Details";
 function Search(props: any) {
   const [showPopup, setShowPopup] = useState(false);
   const [city, setcity] = useState("");
+
   const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setcity(event.target.value);
+  };
+
+  const handleKeyDown = (event: React.KeyboardEvent<HTMLInputElement>) => {
+    if (event.key === "Enter") {
+      setShowPopup(true);
+    }
   };
 
   return (
@@ -18,6 +25,7 @@ function Search(props: any) {
         className={styles.input}
         value={city}
         onChange={handleInputChange}
+        onKeyDown={handleKeyDown}
       />
       <button
         className={styles.searchbutton}
