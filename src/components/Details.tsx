@@ -3,11 +3,11 @@ import styles from "/src/styles/Details.module.scss";
 import { faTimes } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
-const API_KEY = "f0a413b45f3448d7b70192646221012";
+const WEATHER_API_KEY = "f0a413b45f3448d7b70192646221012";
 
 async function getweather(cityweather: string) {
   const response = await fetch(
-    `https://api.weatherapi.com/v1/current.json?key=${API_KEY}&q=${cityweather}&aqi=no`
+    `https://api.weatherapi.com/v1/current.json?key=${WEATHER_API_KEY}&q=${cityweather}&aqi=no`
   );
   const data = await response.json();
   return data;
@@ -15,7 +15,7 @@ async function getweather(cityweather: string) {
 
 async function getForecast(cityweather: string, hour: any) {
   const response = await fetch(
-    `https://api.weatherapi.com/v1/forecast.json?key=${API_KEY}&q=${cityweather}&hour=${hour}`
+    `https://api.weatherapi.com/v1/forecast.json?key=${WEATHER_API_KEY}&q=${cityweather}&hour=${hour}`
   );
   const data = await response.json();
   return data;
@@ -35,20 +35,25 @@ function Details(props: any) {
   const [Icon9h, setIcon9h] = useState("");
   const [Temp12h, setTemp12h] = useState("");
   const [Icon12h, setIcon12h] = useState("");
+  const [Description, setDescription] = useState("");
 
   const date = new Date();
 
   const forecastTime3h = new Date(date.getTime() + 3 * 60 * 60 * 1000);
-  const forecastHour3h = forecastTime3h.getHours() + ":00";
+  const forecast3h = forecastTime3h.getHours();
+  const forecastHour3h = forecast3h + ":00";
 
   const forecastTime6h = new Date(date.getTime() + 6 * 60 * 60 * 1000);
-  const forecastHour6h = forecastTime6h.getHours() + ":00";
+  const forecast6h = forecastTime6h.getHours();
+  const forecastHour6h = forecast6h + ":00";
 
   const forecastTime9h = new Date(date.getTime() + 9 * 60 * 60 * 1000);
-  const forecastHour9h = forecastTime9h.getHours() + ":00";
+  const forecast9h = forecastTime9h.getHours();
+  const forecastHour9h = forecast9h + ":00";
 
   const forecastTime12h = new Date(date.getTime() + 12 * 60 * 60 * 1000);
-  const forecastHour12h = forecastTime12h.getHours() + ":00";
+  const forecast12h = forecastTime12h.getHours();
+  const forecastHour12h = forecast12h + ":00";
 
   const cityweather = props.city;
   useEffect(() => {
@@ -75,7 +80,7 @@ function Details(props: any) {
         Math.round(forecastweather.forecast.forecastday[0].day.mintemp_c) + "°C"
       );
 
-      const hourforecast3h = await getForecast(cityweather, forecastHour3h);
+      const hourforecast3h = await getForecast(cityweather, forecast3h);
 
       setTemp3h(
         Math.round(hourforecast3h.forecast.forecastday[0].hour[0].temp_c) + "°C"
@@ -83,7 +88,7 @@ function Details(props: any) {
 
       setIcon3h(hourforecast3h.forecast.forecastday[0].hour[0].condition.icon);
 
-      const hourforecast6h = await getForecast(cityweather, forecastHour6h);
+      const hourforecast6h = await getForecast(cityweather, forecast6h);
 
       setTemp6h(
         Math.round(hourforecast6h.forecast.forecastday[0].hour[0].temp_c) + "°C"
@@ -91,7 +96,7 @@ function Details(props: any) {
 
       setIcon6h(hourforecast6h.forecast.forecastday[0].hour[0].condition.icon);
 
-      const hourforecast9h = await getForecast(cityweather, forecastHour9h);
+      const hourforecast9h = await getForecast(cityweather, forecast9h);
 
       setTemp9h(
         Math.round(hourforecast9h.forecast.forecastday[0].hour[0].temp_c) + "°C"
@@ -99,7 +104,7 @@ function Details(props: any) {
 
       setIcon9h(hourforecast9h.forecast.forecastday[0].hour[0].condition.icon);
 
-      const hourforecast12h = await getForecast(cityweather, forecastHour12h);
+      const hourforecast12h = await getForecast(cityweather, forecast12h);
 
       setTemp12h(
         Math.round(hourforecast12h.forecast.forecastday[0].hour[0].temp_c) +
@@ -130,6 +135,11 @@ function Details(props: any) {
         </div>
         <div className={styles.titleparent}>
           <h1 className={styles.title}>{Title}</h1>
+        </div>
+        <div className={styles.aidescriptionparent}>
+          <div className={styles.aitextparent}>
+            <p className={styles.aidescription}>{Description}</p>
+          </div>
         </div>
         <div className={styles.tempparent}>
           <p className={styles.currenttemp}>{Temp}</p>

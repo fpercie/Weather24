@@ -2,11 +2,11 @@ import React, { useEffect, useState } from "react";
 import styles from "/src/styles/Popularcities.module.scss";
 import Details from "./Details";
 
-const API_KEY = "f0a413b45f3448d7b70192646221012";
+const WEATHER_API_KEY = "f0a413b45f3448d7b70192646221012";
 
 async function getWeather(city: string) {
   const response = await fetch(
-    `https://api.weatherapi.com/v1/current.json?key=${API_KEY}&q=${city}&aqi=no`
+    `https://api.weatherapi.com/v1/current.json?key=${WEATHER_API_KEY}&q=${city}&aqi=no`
   );
   const data = await response.json();
   return data;
