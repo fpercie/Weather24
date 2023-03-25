@@ -5,7 +5,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 const API_KEY = "f0a413b45f3448d7b70192646221012";
 
-async function getweather(cityweather: any) {
+async function getweather(cityweather: string) {
   const response = await fetch(
     `https://api.weatherapi.com/v1/current.json?key=${API_KEY}&q=${cityweather}&aqi=no`
   );
@@ -13,8 +13,42 @@ async function getweather(cityweather: any) {
   return data;
 }
 
+async function getForecast(cityweather: string, hour: any) {
+  const response = await fetch(
+    `https://api.weatherapi.com/v1/forecast.json?key=${API_KEY}&q=${cityweather}&hour=${hour}`
+  );
+  const data = await response.json();
+  return data;
+}
+
 function Details(props: any) {
   const [Title, setTitle] = useState("");
+  const [Temp, setTemp] = useState("");
+  const [CurrentIcon, setCurrentIcon] = useState("");
+  const [MaxTemp, setMaxTemp] = useState("");
+  const [MinTemp, setMinTemp] = useState("");
+  const [Temp3h, setTemp3h] = useState("");
+  const [Icon3h, setIcon3h] = useState("");
+  const [Temp6h, setTemp6h] = useState("");
+  const [Icon6h, setIcon6h] = useState("");
+  const [Temp9h, setTemp9h] = useState("");
+  const [Icon9h, setIcon9h] = useState("");
+  const [Temp12h, setTemp12h] = useState("");
+  const [Icon12h, setIcon12h] = useState("");
+
+  const date = new Date();
+
+  const forecastTime3h = new Date(date.getTime() + 3 * 60 * 60 * 1000);
+  const forecastHour3h = forecastTime3h.getHours() + ":00";
+
+  const forecastTime6h = new Date(date.getTime() + 6 * 60 * 60 * 1000);
+  const forecastHour6h = forecastTime6h.getHours() + ":00";
+
+  const forecastTime9h = new Date(date.getTime() + 9 * 60 * 60 * 1000);
+  const forecastHour9h = forecastTime9h.getHours() + ":00";
+
+  const forecastTime12h = new Date(date.getTime() + 12 * 60 * 60 * 1000);
+  const forecastHour12h = forecastTime12h.getHours() + ":00";
 
   const cityweather = props.city;
   useEffect(() => {
@@ -24,10 +58,62 @@ function Details(props: any) {
       setTitle(
         currentweather.location.name + ", " + currentweather.location.country
       );
+
+      setTemp(Math.round(currentweather.current.temp_c).toString() + "°C");
+
+      setCurrentIcon(currentweather.current.condition.icon);
+    }
+
+    async function displayforecast() {
+      const forecastweather = await getForecast(cityweather, date);
+
+      setMaxTemp(
+        Math.round(forecastweather.forecast.forecastday[0].day.maxtemp_c) + "°C"
+      );
+
+      setMinTemp(
+        Math.round(forecastweather.forecast.forecastday[0].day.mintemp_c) + "°C"
+      );
+
+      const hourforecast3h = await getForecast(cityweather, forecastHour3h);
+
+      setTemp3h(
+        Math.round(hourforecast3h.forecast.forecastday[0].hour[0].temp_c) + "°C"
+      );
+
+      setIcon3h(hourforecast3h.forecast.forecastday[0].hour[0].condition.icon);
+
+      const hourforecast6h = await getForecast(cityweather, forecastHour6h);
+
+      setTemp6h(
+        Math.round(hourforecast6h.forecast.forecastday[0].hour[0].temp_c) + "°C"
+      );
+
+      setIcon6h(hourforecast6h.forecast.forecastday[0].hour[0].condition.icon);
+
+      const hourforecast9h = await getForecast(cityweather, forecastHour9h);
+
+      setTemp9h(
+        Math.round(hourforecast9h.forecast.forecastday[0].hour[0].temp_c) + "°C"
+      );
+
+      setIcon9h(hourforecast9h.forecast.forecastday[0].hour[0].condition.icon);
+
+      const hourforecast12h = await getForecast(cityweather, forecastHour12h);
+
+      setTemp12h(
+        Math.round(hourforecast12h.forecast.forecastday[0].hour[0].temp_c) +
+          "°C"
+      );
+
+      setIcon12h(
+        hourforecast12h.forecast.forecastday[0].hour[0].condition.icon
+      );
     }
 
     if (cityweather) {
       displayweather();
+      displayforecast();
     }
   }, [cityweather]);
 
@@ -44,6 +130,61 @@ function Details(props: any) {
         </div>
         <div className={styles.titleparent}>
           <h1 className={styles.title}>{Title}</h1>
+        </div>
+        <div className={styles.tempparent}>
+          <p className={styles.currenttemp}>{Temp}</p>
+          <img className={styles.CurrentIcon} src={CurrentIcon} />
+        </div>
+        <div className={styles.minandmaxtemp}>
+          <p className={styles.minormaxtemp}>{MinTemp}</p>
+          <div className={styles.minmaxtempconnection}></div>
+          <p className={styles.minormaxtemp}>{MaxTemp}</p>
+        </div>
+        <div className={styles.hourforecast}>
+          <div className={styles.forecasthour}>
+            <div className={styles.parenthourinxhours}>
+              <p className={styles.hourinxhours}>{forecastHour3h}</p>
+            </div>
+            <div className={styles.parenttempinxhours}>
+              <p className={styles.tempinxhours}>{Temp3h}</p>
+            </div>
+            <div className={styles.parenticoninxhours}>
+              <img className={styles.iconinxhours} src={Icon3h} />
+            </div>
+          </div>
+          <div className={styles.forecasthour}>
+            <div className={styles.parenthourinxhours}>
+              <p className={styles.hourinxhours}>{forecastHour6h}</p>
+            </div>
+            <div className={styles.parenttempinxhours}>
+              <p className={styles.tempinxhours}>{Temp6h}</p>
+            </div>
+            <div className={styles.parenticoninxhours}>
+              <img className={styles.iconinxhours} src={Icon6h} />
+            </div>
+          </div>
+          <div className={styles.forecasthour}>
+            <div className={styles.parenthourinxhours}>
+              <p className={styles.hourinxhours}>{forecastHour9h}</p>
+            </div>
+            <div className={styles.parenttempinxhours}>
+              <p className={styles.tempinxhours}>{Temp9h}</p>
+            </div>
+            <div className={styles.parenticoninxhours}>
+              <img className={styles.iconinxhours} src={Icon9h} />
+            </div>
+          </div>
+          <div className={styles.forecasthour}>
+            <div className={styles.parenthourinxhours}>
+              <p className={styles.hourinxhours}>{forecastHour12h}</p>
+            </div>
+            <div className={styles.parenttempinxhours}>
+              <p className={styles.tempinxhours}>{Temp12h}</p>
+            </div>
+            <div className={styles.parenticoninxhours}>
+              <img className={styles.iconinxhours} src={Icon12h} />
+            </div>
+          </div>
         </div>
       </div>
     </div>

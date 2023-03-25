@@ -1,9 +1,9 @@
 .parent {
   display: flex;
-  align-items: center;
   justify-content: center;
   height: 100vh;
   width: 100vw;
+  padding-top: 5vh;
   background: linear-gradient(
     to right,
     #2980b9,
@@ -16,11 +16,11 @@
   top: 0;
   left: 0;
   z-index: 99999;
-  overflow: scroll;
+  overflow-y: auto;
 
   .child {
-    width: 90vw;
-    height: 90vh;
+    width: 95vw;
+    height: 1500px;
     background-color: #0b39d3;
     z-index: 9999;
     border-radius: 30px;
@@ -28,6 +28,8 @@
     display: flex;
     flex-direction: column;
     align-items: center;
+    gap: 20px;
+    position: relative;
 
     .closediv {
       background-color: transparent;
@@ -56,13 +58,135 @@
       align-items: center;
       justify-content: center;
       height: 100px;
-      width: 90vw;
+      width: 85vw;
       background-color: transparent;
+      background-color: #07226a;
+      border-radius: 30px;
 
       .title {
         color: #ffffff;
         text-align: center;
         background-color: transparent;
+      }
+    }
+
+    .tempparent {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      height: 150px;
+      width: 85vw;
+      background-color: transparent;
+      flex-direction: row;
+      gap: 30px;
+      background-color: #07226a;
+      border-radius: 30px;
+
+      .currenttemp {
+        background-color: transparent;
+        color: #ffffff;
+        font-size: 50px;
+        font-weight: 600;
+      }
+      .CurrentIcon {
+        background-color: transparent;
+        height: 10vh;
+      }
+    }
+
+    .minandmaxtemp {
+      display: flex;
+      width: 85vw;
+      background-color: transparent;
+      flex-direction: row;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      background-color: #07226a;
+      border-radius: 30px;
+
+      .minormaxtemp {
+        background-color: transparent;
+        font-size: 40px;
+        color: #ffffff;
+        font-weight: 600;
+      }
+
+      .minmaxtempconnection {
+        height: 10px;
+        width: 30vw;
+        border-radius: 20px;
+        background: linear-gradient(to right, #489feb, #e23b3b);
+      }
+    }
+    .hourforecast {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      background-color: transparent;
+
+      .forecasthour {
+        display: flex;
+        background-color: #07226a;
+        height: 300px;
+        width: 105px;
+        border-radius: 30px;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        padding: 30px;
+        gap: 20px;
+        border: solid 3px #737477;
+
+        .parenthourinxhours {
+          width: 130px;
+          height: 50px;
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          background-color: #020b23;
+          border-radius: 30px;
+
+          .hourinxhours {
+            color: #ffffff;
+            font-weight: 600;
+            font-size: 35px;
+            background-color: transparent;
+          }
+        }
+
+        .parenttempinxhours {
+          width: 130px;
+          height: 50px;
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          background-color: #020b23;
+          border-radius: 30px;
+
+          .tempinxhours {
+            color: #ffffff;
+            font-weight: 600;
+            font-size: 45px;
+            background-color: transparent;
+          }
+        }
+        .parenticoninxhours {
+          width: 140px;
+          height: 150px;
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          background-color: #020b23;
+          border-radius: 30px;
+
+          .iconinxhours {
+            height: 100px;
+            background-color: transparent;
+          }
+        }
       }
     }
   }
