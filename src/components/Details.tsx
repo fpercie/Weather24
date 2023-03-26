@@ -4,7 +4,7 @@ import { faTimes } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 const WEATHER_API_KEY = "f0a413b45f3448d7b70192646221012";
-const OPENAI_API_KEY = "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";
+const OPENAI_API_KEY = "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";
 
 async function getweather(cityweather: string) {
   const response = await fetch(
@@ -36,6 +36,12 @@ function Details(props: any) {
   const [Icon9h, setIcon9h] = useState("");
   const [Temp12h, setTemp12h] = useState("");
   const [Icon12h, setIcon12h] = useState("");
+  const [Text, setText] = useState("");
+  const [Text3h, setText3h] = useState("");
+  const [Text6h, setText6h] = useState("");
+  const [Text9h, setText9h] = useState("");
+  const [Text12h, setText12h] = useState("");
+
   const [Description, setDescription] = useState("");
 
   const date = new Date();
@@ -68,6 +74,8 @@ function Details(props: any) {
       setTemp(Math.round(currentweather.current.temp_c).toString() + "°C");
 
       setCurrentIcon(currentweather.current.condition.icon);
+
+      setText(currentweather.current.condition.text);
     }
 
     async function displayforecast() {
@@ -87,6 +95,8 @@ function Details(props: any) {
         Math.round(hourforecast3h.forecast.forecastday[0].hour[0].temp_c) + "°C"
       );
 
+      setText3h(hourforecast3h.forecast.forecastday[0].hour[0].condition.text);
+
       setIcon3h(hourforecast3h.forecast.forecastday[0].hour[0].condition.icon);
 
       const hourforecast6h = await getForecast(cityweather, forecast6h);
@@ -94,6 +104,8 @@ function Details(props: any) {
       setTemp6h(
         Math.round(hourforecast6h.forecast.forecastday[0].hour[0].temp_c) + "°C"
       );
+
+      setText6h(hourforecast6h.forecast.forecastday[0].hour[0].condition.text);
 
       setIcon6h(hourforecast6h.forecast.forecastday[0].hour[0].condition.icon);
 
@@ -103,6 +115,8 @@ function Details(props: any) {
         Math.round(hourforecast9h.forecast.forecastday[0].hour[0].temp_c) + "°C"
       );
 
+      setText9h(hourforecast9h.forecast.forecastday[0].hour[0].condition.text);
+
       setIcon9h(hourforecast9h.forecast.forecastday[0].hour[0].condition.icon);
 
       const hourforecast12h = await getForecast(cityweather, forecast12h);
@@ -110,6 +124,10 @@ function Details(props: any) {
       setTemp12h(
         Math.round(hourforecast12h.forecast.forecastday[0].hour[0].temp_c) +
           "°C"
+      );
+
+      setText12h(
+        hourforecast12h.forecast.forecastday[0].hour[0].condition.text
       );
 
       setIcon12h(
@@ -124,14 +142,22 @@ function Details(props: any) {
   }, [cityweather]);
 
   useEffect(() => {
-    const prompt = `make a nice weather description for ${Title}, the current temp is ${Temp}, the max temp for today is ${MaxTemp} and the min temp for today is ${MinTemp}`;
-
     async function callOpenAIAPI() {
       const APIBody = {
         model: "text-davinci-003",
-        prompt: prompt,
+        prompt: `Generate a friendly weather description for ${Title}, focusing on the current conditions and what people might want to do on a day like this. Use the following information:
+        date and time: ${date} (use it so you know the time and dont say things like "It's a great day to get out and explore the city, as the temperature will be rising throughout the day " even thoug its night)
+        Current temperature: ${Temp}
+        Weather condition: ${Text}
+        Max temperature for today: ${MaxTemp}
+        Min temperature for today: ${MinTemp}
+        At ${forecastHour3h}, the temperature will be ${Temp3h} with ${Text3h}
+        At ${forecastHour6h}, the temperature will be ${Temp6h} with ${Text6h}
+        At ${forecastHour9h}, the temperature will be ${Temp9h} with ${Text9h}
+        At ${forecastHour12h}, the temperature will be ${Temp12h} with ${Text12h}
+        Craft a description that highlights the positive aspects of the weather, such as whether it's a good day for outdoor activities, or if people should plan to stay indoors. Use your creativity to make the description engaging and appealing to readers.`,
         temperature: 0,
-        max_tokens: 80,
+        max_tokens: 400,
         top_p: 1.0,
         frequency_penalty: 0.0,
         presence_penalty: 0.0,
