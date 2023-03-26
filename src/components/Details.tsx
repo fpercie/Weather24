@@ -4,6 +4,7 @@ import { faTimes } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 const WEATHER_API_KEY = "f0a413b45f3448d7b70192646221012";
+const OPENAI_API_KEY = "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";
 
 async function getweather(cityweather: string) {
   const response = await fetch(
@@ -116,9 +117,43 @@ function Details(props: any) {
       );
     }
 
+    const prompt = `make a nice weather description for ${Title}, the current temp is ${Temp}, the max temp for today is ${MaxTemp} and the min temp for today is ${MinTemp}`;
+
+    console.log(prompt);
+
+    async function callOpenAIAPI() {
+      console.log("Calling the OpenAI API");
+
+      const APIBody = {
+        model: "text-davinci-003",
+        prompt: prompt,
+        temperature: 0,
+        max_tokens: 80,
+        top_p: 1.0,
+        frequency_penalty: 0.0,
+        presence_penalty: 0.0,
+      };
+
+      await fetch("https://api.openai.com/v1/completions", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: "Bearer " + OPENAI_API_KEY,
+        },
+        body: JSON.stringify(APIBody),
+      })
+        .then((data) => {
+          return data.json();
+        })
+        .then((data) => {
+          setDescription(data.choices[0].text.trim());
+        });
+    }
+
     if (cityweather) {
       displayweather();
       displayforecast();
+      callOpenAIAPI();
     }
   }, [cityweather]);
 
