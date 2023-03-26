@@ -70,7 +70,6 @@
         background-color: transparent;
       }
     }
-
     .aidescriptionparent {
       display: flex;
       align-items: center;
@@ -82,10 +81,11 @@
       border: solid 3px #9b9b9b;
       white-space: normal;
       word-wrap: break-word;
-      word-break: break-all;
+      overflow-wrap: break-word;
 
       .aitextparent {
         width: 80vw;
+        text-align: center;
 
         .aidescription {
           font-size: 20px;

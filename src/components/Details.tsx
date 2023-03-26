@@ -4,7 +4,7 @@ import { faTimes } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 const WEATHER_API_KEY = "f0a413b45f3448d7b70192646221012";
-const OPENAI_API_KEY = "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";
+const OPENAI_API_KEY = "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";
 
 async function getweather(cityweather: string) {
   const response = await fetch(
@@ -117,13 +117,16 @@ function Details(props: any) {
       );
     }
 
+    if (cityweather) {
+      displayweather();
+      displayforecast();
+    }
+  }, [cityweather]);
+
+  useEffect(() => {
     const prompt = `make a nice weather description for ${Title}, the current temp is ${Temp}, the max temp for today is ${MaxTemp} and the min temp for today is ${MinTemp}`;
 
-    console.log(prompt);
-
     async function callOpenAIAPI() {
-      console.log("Calling the OpenAI API");
-
       const APIBody = {
         model: "text-davinci-003",
         prompt: prompt,
@@ -151,11 +154,9 @@ function Details(props: any) {
     }
 
     if (cityweather) {
-      displayweather();
-      displayforecast();
       callOpenAIAPI();
     }
-  }, [cityweather]);
+  });
 
   return props.trigger ? (
     <div className={styles.parent}>
