@@ -3,8 +3,8 @@ import styles from "/src/styles/Details.module.scss";
 import { faTimes } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
-const WEATHER_API_KEY = "f0a413b45f3448d7b70192646221012";
-const OPENAI_API_KEY = "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";
+const WEATHER_API_KEY = process.env.WEATHER_API_KEY;
+const OPENAI_API_KEY = process.env.OPENAI_API_KEY;
 
 async function getweather(cityweather: string) {
   const response = await fetch(
@@ -17,6 +17,13 @@ async function getweather(cityweather: string) {
 async function getForecast(cityweather: string, hour: any) {
   const response = await fetch(
     `https://api.weatherapi.com/v1/forecast.json?key=${WEATHER_API_KEY}&q=${cityweather}&hour=${hour}`
+  );
+  const data = await response.json();
+  return data;
+}
+async function getAstronomy(cityweather: string, date: any) {
+  const response = await fetch(
+    `https://api.weatherapi.com/v1/astronomy.json?key=${WEATHER_API_KEY}&q=${cityweather}&dt=${date}`
   );
   const data = await response.json();
   return data;
@@ -41,10 +48,19 @@ function Details(props: any) {
   const [Text6h, setText6h] = useState("");
   const [Text9h, setText9h] = useState("");
   const [Text12h, setText12h] = useState("");
+  const [prompt, setprompt] = useState("");
+  const [Feelslike, setFeelslike] = useState("");
+  const [Humidity, setHumidity] = useState("");
+  const [UV, setUV] = useState("");
+  const [Wind, setWind] = useState("");
+  const [Precip, setPrecip] = useState("");
+  const [Sunrise, setSunrise] = useState("");
+  const [Sunset, setSunset] = useState("");
 
   const [Description, setDescription] = useState("");
 
   const date = new Date();
+  const currenthour = date.getHours() + ":00";
 
   const forecastTime3h = new Date(date.getTime() + 3 * 60 * 60 * 1000);
   const forecast3h = forecastTime3h.getHours();
@@ -76,6 +92,18 @@ function Details(props: any) {
       setCurrentIcon(currentweather.current.condition.icon);
 
       setText(currentweather.current.condition.text);
+
+      setFeelslike(
+        Math.round(currentweather.current.feelslike_c).toString() + "°C"
+      );
+
+      setHumidity(currentweather.current.humidity + "%");
+
+      setUV(currentweather.current.uv);
+
+      setWind(Math.round(currentweather.current.wind_kph) + " kph");
+
+      setPrecip(currentweather.current.precip_mm + " mm");
     }
 
     async function displayforecast() {
@@ -135,27 +163,71 @@ function Details(props: any) {
       );
     }
 
+    async function displayAstronomy() {
+      const currentDate = new Date().toISOString().slice(0, 10);
+      const astroweather = await getAstronomy(cityweather, currentDate);
+
+      setSunrise(astroweather.astronomy.astro.sunrise);
+
+      setSunset(astroweather.astronomy.astro.sunset);
+    }
+
     if (cityweather) {
       displayweather();
       displayforecast();
+      displayAstronomy();
     }
   }, [cityweather]);
+
+  useEffect(() => {
+    if (cityweather) {
+      const prompt = `Generate a friendly weather description for ${Title}, focusing on the current conditions and what people might want to do on a day like this. Use the following information:
+      time: ${currenthour} (dont say,use it so you know the time and dont say things like "It's a great day to get out and explore the city, as the temperature will be rising throughout the day " even thoug its night)
+      Current temperature: ${Temp}
+      feelslike temp: ${Feelslike}(dont say)
+      Weather condition: ${Text}
+      humidity: ${Humidity} (dont say the %, say for example "ist dry" )
+      uv: ${UV}
+      wind: ${Wind} 
+      precip: ${Precip}
+      Max temperature for today: ${MaxTemp}
+      Min temperature for today: ${MinTemp}
+      At ${forecastHour3h}, the temperature will be ${Temp3h} with ${Text3h}
+      At ${forecastHour6h}, the temperature will be ${Temp6h} with ${Text6h}
+      At ${forecastHour9h}, the temperature will be ${Temp9h} with ${Text9h}
+      At ${forecastHour12h}, the temperature will be ${Temp12h} with ${Text12h}
+      Craft a description that highlights the positive aspects of the weather, such as whether it's a good day for outdoor activities, or if people should plan to stay indoors. Use your creativity to make the description engaging and appealing to readers.`;
+
+      setprompt(prompt);
+    }
+  }, [
+    cityweather,
+    Title,
+    currenthour,
+    Temp,
+    Feelslike,
+    Text,
+    MaxTemp,
+    MinTemp,
+    forecastHour3h,
+    Temp3h,
+    Text3h,
+    forecastHour6h,
+    Temp6h,
+    Text6h,
+    forecastHour9h,
+    Temp9h,
+    Text9h,
+    forecastHour12h,
+    Temp12h,
+    Text12h,
+  ]);
 
   useEffect(() => {
     async function callOpenAIAPI() {
       const APIBody = {
         model: "text-davinci-003",
-        prompt: `Generate a friendly weather description for ${Title}, focusing on the current conditions and what people might want to do on a day like this. Use the following information:
-        date and time: ${date} (use it so you know the time and dont say things like "It's a great day to get out and explore the city, as the temperature will be rising throughout the day " even thoug its night)
-        Current temperature: ${Temp}
-        Weather condition: ${Text}
-        Max temperature for today: ${MaxTemp}
-        Min temperature for today: ${MinTemp}
-        At ${forecastHour3h}, the temperature will be ${Temp3h} with ${Text3h}
-        At ${forecastHour6h}, the temperature will be ${Temp6h} with ${Text6h}
-        At ${forecastHour9h}, the temperature will be ${Temp9h} with ${Text9h}
-        At ${forecastHour12h}, the temperature will be ${Temp12h} with ${Text12h}
-        Craft a description that highlights the positive aspects of the weather, such as whether it's a good day for outdoor activities, or if people should plan to stay indoors. Use your creativity to make the description engaging and appealing to readers.`,
+        prompt: prompt,
         temperature: 0,
         max_tokens: 400,
         top_p: 1.0,
@@ -179,10 +251,10 @@ function Details(props: any) {
         });
     }
 
-    if (cityweather) {
+    if (prompt) {
       callOpenAIAPI();
     }
-  });
+  }, [prompt]);
 
   return props.trigger ? (
     <div className={styles.parent}>
@@ -211,6 +283,33 @@ function Details(props: any) {
           <p className={styles.minormaxtemp}>{MinTemp}</p>
           <div className={styles.minmaxtempconnection}></div>
           <p className={styles.minormaxtemp}>{MaxTemp}</p>
+        </div>
+        <div className={styles.humidityuvwindprecipparent}>
+          <div className={styles.humidityuvwindprecip}>
+            <h1 className={styles.humidityuvwindpreciptitle}>
+              Humidity: {Humidity}
+            </h1>
+          </div>
+          <div className={styles.humidityuvwindprecip}>
+            <h1 className={styles.humidityuvwindpreciptitle}>UV: {UV}</h1>
+          </div>
+          <div className={styles.humidityuvwindprecip}>
+            <h1 className={styles.humidityuvwindpreciptitle}>Wind: {Wind}</h1>
+          </div>
+          <div className={styles.humidityuvwindprecip}>
+            <h1 className={styles.humidityuvwindpreciptitle}>
+              Precipitation: {Precip}
+            </h1>
+          </div>
+        </div>
+        <div className={styles.suriseandsunsetparent}>
+          <div className={styles.suriseandsunset}>
+            <h1 className={styles.sunrisesunsetchild}>Sunrise: {Sunrise}</h1>
+          </div>
+          <div className={styles.suriseandsunsetconector}></div>
+          <div className={styles.suriseandsunset}>
+            <h1 className={styles.sunrisesunsetchild}>Sunset: {Sunset}</h1>
+          </div>
         </div>
         <div className={styles.hourforecast}>
           <div className={styles.forecasthour}>
