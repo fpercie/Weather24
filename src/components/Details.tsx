@@ -4,8 +4,7 @@ import { faTimes } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 const WEATHER_API_KEY = "a76aca2cbf214ceb941193109221012";
-const OPENAI_API_KEY =
-  "sk-MfUX1HZ6uGK0prHhK7ycT3BlbkFJnMuJBMDGYJk2XcIG0T6" + "w";
+const OPENAI_API_KEY = "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";
 
 async function getweather(cityweather: string) {
   const response = await fetch(
