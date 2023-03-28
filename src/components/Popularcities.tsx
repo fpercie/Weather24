@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import styles from "/src/styles/Popularcities.module.scss";
 import Details from "./Details";
 
-const WEATHER_API_KEY = process.env.WEATHER_API_KEY;
+const WEATHER_API_KEY = "a76aca2cbf214ceb941193109221012";
 
 async function getWeather(city: string) {
   const response = await fetch(
