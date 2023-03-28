@@ -1,6 +1,8 @@
 const path = require("path");
 const HtmlWebpackPlugin = require("html-webpack-plugin");
 const styleLoader = require("style-loader");
+const process = require("process");
+global.process = process;
 
 module.exports = {
   mode: "development",
@@ -31,7 +33,8 @@ module.exports = {
     fallback: {
       fs: false,
       path: require.resolve("path-browserify"),
-      os: false,
+      os: require.resolve("os-browserify/browser"),
+      process: require.resolve("process/browser"), // make sure this line is included
     },
   },
   plugins: [
