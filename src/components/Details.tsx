@@ -3,6 +3,8 @@ import styles from "/src/styles/Details.module.scss";
 import { faTimes } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
+require("dotenv").config({ path: "/dist/api.env" });
+
 const WEATHER_API_KEY = process.env.WEATHER_API_KEY;
 const OPENAI_API_KEY = process.env.OPENAI_API_KEY;
 
