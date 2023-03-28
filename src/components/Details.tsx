@@ -97,7 +97,7 @@ function Details(props: any) {
         Math.round(currentweather.current.feelslike_c).toString() + "°C"
       );
 
-      setHumidity(currentweather.current.humidity + "%");
+      setHumidity(currentweather.current.humidity + " %");
 
       setUV(currentweather.current.uv);
 
